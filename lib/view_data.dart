@@ -40,7 +40,8 @@ class _ViewDataState extends State<ViewData> {
               trailing: IconButton(
                 icon: const Icon(Icons.delete),
                 onPressed: () {
-                  deleteRecord(userData[index]["uid"]);
+                  debugPrint('Fetched id: ${userData[index]["id"]}');
+                  deleteRecord(userData[index]["id"]);
                 },
               ),
             ),
@@ -68,11 +69,14 @@ class _ViewDataState extends State<ViewData> {
   Future<void> deleteRecord(String id) async {
     String uri = "http://10.0.2.2/practice_api/delete_data.php";
     try {
-      debugPrint('Inside delete Record');
-      var res = await http.delete(Uri.parse(uri), body: {"id": id});
+      debugPrint('Inside delete Record for id: $id');
+      var res = await http.post(Uri.parse(uri), body: {"id": id});
+      debugPrint('response: ${res.body}');
       var response = jsonDecode(res.body);
+      debugPrint('Response: $response');
       if (response["success"] == "true") {
         debugPrint('Record deleted successfully');
+        getrecord();
       } else {
         debugPrint('Failed to delete the record!');
       }
