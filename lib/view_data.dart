@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:my_sql_practice/update_record.dart';
 
 class ViewData extends StatefulWidget {
   const ViewData({super.key});
@@ -37,6 +38,18 @@ class _ViewDataState extends State<ViewData> {
               ),
               title: Text(userData[index]["uname"]),
               subtitle: Text(userData[index]["uemail"]),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => UpdateRecord(
+                      userData[index]["uname"],
+                      userData[index]["uemail"],
+                      userData[index]["upassword"],
+                    ),
+                  ),
+                );
+              },
               trailing: IconButton(
                 icon: const Icon(Icons.delete),
                 onPressed: () {
